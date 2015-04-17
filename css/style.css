@@ -16,6 +16,9 @@ html,body{
 body{
     padding-top:50px; /*padding for navbar*/
 }
+input{
+    color: black;
+}
 
 .navbar-custom .icon-bar {
     background-color:#fff;
@@ -54,7 +57,7 @@ body{
 }
 
 #map-canvas {
-    width:33.3333%;
+    width:32%;
     height:calc(100% - 0);
     position:absolute;
     right:16px;

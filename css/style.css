@@ -19,6 +19,9 @@ body{
 input{
     color: black;
 }
+.list-group-item:hover, .list-group-item:focus {
+    color: @nonhoovercolor;
+}
 
 .navbar-custom .icon-bar {
     background-color:#fff;
@@ -27,6 +30,7 @@ input{
 .navbar-custom {
     background-color: #168ccc;
     color:#fff;
+    right: 25px;
 }
 
 .navbar-custom li>a:hover,.navbar-custom li>a:focus {
@@ -57,7 +61,7 @@ input{
 }
 
 #map-canvas {
-    width:32%;
+    width:58%;
     height:calc(100% - 0);
     position:absolute;
     right:16px;

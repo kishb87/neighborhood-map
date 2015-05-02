@@ -30,7 +30,6 @@ input{
 .navbar-custom {
     background-color: #168ccc;
     color:#fff;
-    right: 25px;
 }
 
 .navbar-custom li>a:hover,.navbar-custom li>a:focus {

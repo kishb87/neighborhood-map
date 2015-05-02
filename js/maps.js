@@ -123,6 +123,8 @@ function initialize(markers) {
 
 
 /* Yelp API Call -----------------------------------------------------*/
+/* Note: This code is a modification from code received from this Google Group: 
+https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
 
 var yelpCall = (function(){
     var self, auth, message, request;

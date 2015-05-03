@@ -33,10 +33,10 @@ function initialize(markers) {
 
         function markerPopulate(){
 
-            var content, infowindow, i = markerLength;
+            var content, infowindow, i = markerLength, marker;
 
             while ( i-- ){  
-                    var marker = new google.maps.Marker({
+                    marker = new google.maps.Marker({
                     position: new google.maps.LatLng(markers[i][1], markers[i][2]),
                     map: map
                      });
@@ -71,13 +71,11 @@ function initialize(markers) {
                     data.push({marker: marker, infoWindow: infowindow}); 
           
                 }
-            return data;            
-        };
+            return data;           
+        }
        
         function printWindow(markers){
             var results, i = markerLength;
-            console.log(markers);
-
 
             while ( i-- ){
                 var id, elem, latlng, marker, content;
@@ -105,15 +103,8 @@ function initialize(markers) {
                                 });      
                             };
                 })(marker, content));
-            }
-
-            // google.maps.event.addListener(map, "click", function(event) {
-            //                                     infowindow.close();
-            //                                 });
-            
+            } 
         }
-
-
         results = markerPopulate();
         printWindow(markers);
 }
@@ -131,7 +122,7 @@ var yelpCall = (function(){
 
     self = this;
     
-    function parameterMap(city){
+    function parameterInput(city){
         auth = {
                     //
                     // Update with your auth tokens.
@@ -173,20 +164,20 @@ var yelpCall = (function(){
 
         var parameterMap = OAuth.getParameterMap(message.parameters);
         return parameterMap;
-    };
+    }
     
 
     request = function(city) {
                     $.ajax({
                     'url' : 'http://api.yelp.com/v2/search',
-                    'data' : parameterMap(city),
+                    'data' : parameterInput(city),
                     'dataType' : 'jsonp',
                     'jsonpCallback' : 'cb',
                     'success' : function(data, textStats, XMLHttpRequest) {
                         model(data);
                     }
                     }); 
-                }
+                };
     return {request: request};
 
 })();
@@ -206,8 +197,8 @@ function model(data){
                                        "display_phone": data.businesses[i].display_phone,
                                        "coordinate": data.businesses[i].location.coordinate,
                                        "url": data.businesses[i].url});
-        };   
-    };
+        }  
+    }
     function coordinateCompile(){
         var business, i = data.businesses.length;
 
@@ -221,29 +212,29 @@ function model(data){
                 ]);
             }
         }
-    };
+    }
     restaurantCompile();
     coordinateCompile();
     google.maps.event.addDomListener(window, 'load', initialize(markers));
-};
+}
 
 
 /* Knockout viewModel */
 
 function AppViewModel() {
-	var self, city;
+    var self, city;
 
     self = this;
 
-	self.restaurants = ko.observableArray();
-    
-	self.city = ko.observable();
+    self.restaurants = ko.observableArray();
+
+    self.city = ko.observable();
     self.rating = ko.observableArray();
     city = self.city;
-	self.select = function(){
+    self.select = function(){
         yelpCall.request(city);
-	}
-    
+    };
+
     return self;
 }
 

@@ -3,7 +3,7 @@
   <head>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js"></script>
-  	<link rel="stylesheet" href="../css/style.css">
+  	<link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
@@ -11,59 +11,57 @@
   </head>
   <body>
 	   <!-- begin template -->
-        <div class="navbar navbar-custom navbar-fixed-top">
-          <div class="navbar-header"><a class="navbar-brand" href="#">Taco Finder</a></div>
-          <div class="navbar-collapse collapse">
-            <form data-bind="submit: select" class="navbar-form">
-              <div class="form-group" style="display:inline;">
-                <div class="input-group">
-                  <div class="input-group-btn">
-                  </div>
-                  <input class="form-control" placeholder="Enter a city to find the best taco restaurants!" data-bind="value: city" type="text">
-                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
-                </div>
-              </div>
-            </form>
+  <div class="navbar navbar-custom navbar-fixed-top">
+    <div class="navbar-header"><a class="navbar-brand" href="#">Taco Finder</a></div>
+    <div class="navbar-collapse collapse">
+      <form data-bind="submit: select" class="navbar-form">
+        <div class="form-group" style="display:inline;">
+          <div class="input-group">
+            <div class="input-group-btn">
+            </div>
+            <input class="form-control" placeholder="Enter a city to find the best taco restaurants!" data-bind="value: city" type="text">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
           </div>
         </div>
-    
-
-      <div id="map-canvas"></div>
-      <div class="container-fluid" id="main">
-        <div class="row">
-          <div  class="col-xs-5" id="left">
-             <div class="bootcards-list">
-                <div class="panel panel-default">
-                  <div class="list-group" data-bind="foreach: restaurants">
-                    <div class="list-group-item">
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <img class="img rounded pull-left img-responsive" data-bind="attr:{src: imgurl}">
-                        </div>
-                        <div class="col-xs-9">
-                          <div class="row">
-                            <div class="col-xs-7" data-bind="attr: { 'id': $index }">
-                              <h6 class="list-group-item-heading" data-bind="text: name"></h6>
-                              <h6 data-bind="text: address"></h6>
-                              <h6 data-bind="text: display_phone"></h6>
-                            </div>
-                            <div class="col-xs-5">
-                              <h6 class="list-group-item-text" data-bind="text: rating"></h6>
-                              <a target="_blank" class="btn btn-default" data-bind="attr: { 'href': url }">Yelp It</a>
-                            </div>
-                          </div>
-                        </div>
+      </form>
+    </div>
+  </div>
+<div id="map-canvas"></div>
+<div class="container-fluid" id="main">
+  <div class="row">
+    <div  class="col-xs-5" id="left">
+       <div class="bootcards-list">
+          <div class="panel panel-default">
+            <div class="list-group" data-bind="foreach: restaurants">
+              <div class="list-group-item">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <img class="img rounded pull-left img-responsive" data-bind="attr:{src: imgurl}">
+                  </div>
+                  <div class="col-xs-9">
+                    <div class="row">
+                      <div class="col-xs-7" data-bind="attr: { 'id': $index }">
+                        <h6 class="list-group-item-heading" data-bind="text: name"></h6>
+                        <h6 data-bind="text: address"></h6>
+                        <h6 data-bind="text: display_phone"></h6>
+                      </div>
+                      <div class="col-xs-5">
+                        <h6 class="list-group-item-text" data-bind="text: rating"></h6>
+                        <a target="_blank" class="btn btn-default" data-bind="attr: { 'href': url }">Yelp It</a>
                       </div>
                     </div>
                   </div>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-7"><!--map-canvas will be postioned here--></div>
-          </div>
-        </div>
+       </div>
+    </div>
+    <div class="col-xs-7"><!--map-canvas will be postioned here--></div>
+    </div>
+  </div>
 <!-- end template -->
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
-    <script type="text/javascript" src="../js/maps.js"></script>
+    <script type="text/javascript" src="js/maps.js"></script>
   </body>
 </html>

@@ -13,7 +13,6 @@
 	   <!-- begin template -->
   <div class="navbar navbar-custom navbar-fixed-top">
     <div class="navbar-header"><a class="navbar-brand" href="#">Taco Finder</a></div>
-    <div class="navbar-collapse collapse">
       <form data-bind="submit: select" class="navbar-form">
         <div class="form-group" style="display:inline;">
           <div class="input-group">
@@ -24,12 +23,11 @@
           </div>
         </div>
       </form>
-    </div>
   </div>
 <div id="map-canvas"></div>
 <div class="container-fluid" id="main">
   <div class="row">
-    <div  class="col-xs-5" id="left">
+    <div  class="col-xs-5 list-container"  id="left">
        <div class="bootcards-list">
           <div class="panel panel-default">
             <div class="list-group" data-bind="foreach: restaurants">

@@ -18,23 +18,14 @@ body{
 }
 @media (max-width: 767px) {
   body {
-    padding-top: 130px;
+    padding-top: 420px;
   }
 }
-@media (max-width: 750px) {
-  body {
-    padding-top: 130px;
-  }
-  #map-canvas{
-    display:none;
-  }
-  .list-container{
-    width: 100%;
-  }
-}
+
 input{
     color: black;
 }
+
 .list-group-item:hover, .list-group-item:focus {
     color: @nonhoovercolor;
 }
@@ -76,10 +67,9 @@ input{
 }
 
 #map-canvas {
-    width: 58%;
+    width: 100%;
     height: calc(100% - 0);
     position: absolute;
-    right: 16px;
     top: 50px;
     bottom: 0;
     overflow: hidden;

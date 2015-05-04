@@ -18,13 +18,26 @@ function AppViewModel() {
 //Initialize google maps
     function initialize(markers) {
 
-            var avg, mapOptions, map, data, markerLength;
+            var avg, mapOptions, map, data, markerLength, lngNew;
             avg = average(markers);
             markerLength = markers.length;
+            lngNew = avg[1];
 
+            if ($(window).width() > 767) {
+               lngNew = lngNew - .09;
+            }
             mapOptions = {
-              center: {lat: avg[0], lng: avg[1]},
-              zoom: 12
+                center: {lat: avg[0], lng: lngNew},
+                zoom: 12,
+                panControl: true,
+                panControlOptions: {
+                  position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                  style: google.maps.ZoomControlStyle.LARGE,
+                  position: google.maps.ControlPosition.TOP_RIGHT
+                }
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -41,7 +54,6 @@ function AppViewModel() {
                         marker = new google.maps.Marker({
                         position: new google.maps.LatLng(markers[i][1], markers[i][2]),
                         map: map,
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                          });
 
                         marker.setAnimation(google.maps.Animation.DROP);
@@ -55,12 +67,12 @@ function AppViewModel() {
                         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                          
                             return function() {
-                               infowindow.setContent(content);
-                               infowindow.open(map,marker);
-                               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+                                infowindow.setContent(content);
+                                infowindow.open(map,marker);
+                                marker.setAnimation(google.maps.Animation.BOUNCE);
                                 google.maps.event.addListener(map, "click", function(event) {
                                     infowindow.close();
-                                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
+                                    marker.setAnimation(null);
                                 });
                             };
                         })(marker,content,infowindow));
@@ -81,8 +93,8 @@ function AppViewModel() {
                     marker = new google.maps.Marker({
                         position    : latlng,
                         map         : map,
-                        icon        : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                     });
+                console.log(markers);
 
                     
                     content = markers[i][0];
@@ -92,11 +104,10 @@ function AppViewModel() {
                                     var infowindow = new google.maps.InfoWindow({
                                                       content: content
                                                       });
-                                    infowindow.close();
                                     infowindow.open(map, marker);
-                                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png'); 
+                                    marker.setAnimation(google.maps.Animation.BOUNCE);
                                     google.maps.event.addListener(map, "click", function(event) {
-                                        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png'); 
+                                        marker.setAnimation(null);
                                         infowindow.close();
                                     });      
                                 };

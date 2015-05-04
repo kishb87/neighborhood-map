@@ -94,8 +94,6 @@ function AppViewModel() {
                         position    : latlng,
                         map         : map,
                     });
-                console.log(markers);
-
                     
                     content = markers[i][0];
                     
@@ -141,8 +139,8 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
                         serviceProvider : {
                             signatureMethod : "HMAC-SHA1"
                         }
-                }, 
-                terms = 'tacos',
+                };
+                terms = 'tacos';
                 accessor = {
                     consumerSecret : auth.consumerSecret,
                     tokenSecret : auth.accessTokenSecret
@@ -177,6 +175,10 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
                         'data' : parameterInput(city),
                         'dataType' : 'jsonp',
                         'jsonpCallback' : 'cb',
+                        error: function(xhr, status, error) {
+                          var err = eval("(" + xhr.responseText + ")");
+                          alert(err.Message);
+                        },
                         'success' : function(data, textStats, XMLHttpRequest) {
                             restaurantCompile(data);
                         }
@@ -228,7 +230,6 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
     self = this;
 
     self.restaurants = ko.observableArray();
-
     self.city = ko.observable();
     self.rating = ko.observableArray();
     city = self.city;

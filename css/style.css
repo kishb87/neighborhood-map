@@ -20,6 +20,9 @@ body{
   body {
     padding-top: 420px;
   }
+  #map-canvas {
+    top: 100px;
+  }
 }
 
 input{
@@ -59,7 +62,7 @@ input{
 }
 
 #main>.row {
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 #left {

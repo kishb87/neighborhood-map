@@ -83,6 +83,7 @@ function AppViewModel() {
            //Create info windows for when user clicks
             function printWindow(markers, results){
                 var results, i = markerLength;
+                results.reverse();
 
                 while ( i-- ){
                     var id, elem, latlng, marker, content;

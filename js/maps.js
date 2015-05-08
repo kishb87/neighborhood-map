@@ -81,27 +81,20 @@ function AppViewModel() {
                 return data;           
             }
            //Create info windows for when user clicks
-            function printWindow(markers){
+            function printWindow(markers, results){
                 var results, i = markerLength;
 
                 while ( i-- ){
                     var id, elem, latlng, marker, content;
+
                     id = i;
                     elem = document.getElementById(id);
-                    latlng = new google.maps.LatLng(markers[i][1], markers[i][2]);
-
-                    marker = new google.maps.Marker({
-                        position    : latlng,
-                        map         : map,
-                    });
-                    
-                    content = markers[i][0];
+                    marker = results[i].marker;
+                    content = results[i].infoWindow;
                     
                     elem.addEventListener('click', (function(marker, content){
                         return function(){
-                                    var infowindow = new google.maps.InfoWindow({
-                                                      content: content
-                                                      });
+                                    var infowindow = content;
                                     infowindow.open(map, marker);
                                     marker.setAnimation(google.maps.Animation.BOUNCE);
                                     google.maps.event.addListener(map, "click", function(event) {
@@ -114,7 +107,7 @@ function AppViewModel() {
             }
 
         results = markerPopulate();
-        printWindow(markers);
+        printWindow(markers, results);
     }      
 /* Yelp API Call -----------------------------------------------------*/
 /* Note: This code is a modification from code received from this Google Group: 

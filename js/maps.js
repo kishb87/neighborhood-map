@@ -18,7 +18,7 @@ function AppViewModel() {
 //Initialize google maps
     function initialize(markers) {
 
-            var avg, mapOptions, map, data, markerLength, lngNew;
+            var avg, mapOptions, map, markerLength, lngNew;
             avg = average(markers);
             markerLength = markers.length;
             lngNew = avg[1];
@@ -43,12 +43,11 @@ function AppViewModel() {
             map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
 
-            data = [];
 
             //Create markers for map
             function markerPopulate(){
 
-                var content, infowindow, i = markerLength, marker;
+                var content, infowindow, i = markerLength, marker, id, elem;
 
                 while ( i-- ){  
                         marker = new google.maps.Marker({
@@ -64,6 +63,7 @@ function AppViewModel() {
                                                   content: content
                                                   });
 
+                        //Create info windows for when user clicks marker
                         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                          
                             return function() {
@@ -76,39 +76,25 @@ function AppViewModel() {
                                 });
                             };
                         })(marker,content,infowindow));
-                        data.push({marker: marker, infoWindow: infowindow});               
-                    }
-                return data;           
+
+                        id = i;
+                        elem = document.getElementById(id);
+
+                        //Create info windows for when user clicks left panel
+                        elem.addEventListener('click', (function(marker, content, infowindow){
+                            return function(){
+                                        infowindow.setContent(content);
+                                        infowindow.open(map, marker);
+                                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                                        google.maps.event.addListener(map, "click", function(event) {
+                                            marker.setAnimation(null);
+                                            infowindow.close();
+                                        });      
+                                    };
+                        })(marker, content, infowindow));               
+                        }
             }
-           //Create info windows for when user clicks
-            function printWindow(markers, results){
-                var results, i = markerLength;
-                results.reverse();
-
-                while ( i-- ){
-                    var id, elem, latlng, marker, content;
-
-                    id = i;
-                    elem = document.getElementById(id);
-                    marker = results[i].marker;
-                    content = results[i].infoWindow;
-                    
-                    elem.addEventListener('click', (function(marker, content){
-                        return function(){
-                                    var infowindow = content;
-                                    infowindow.open(map, marker);
-                                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                                    google.maps.event.addListener(map, "click", function(event) {
-                                        marker.setAnimation(null);
-                                        infowindow.close();
-                                    });      
-                                };
-                    })(marker, content));
-                } 
-            }
-
-        results = markerPopulate();
-        printWindow(markers, results);
+        markerPopulate();
     }      
 /* Yelp API Call -----------------------------------------------------*/
 /* Note: This code is a modification from code received from this Google Group: 
@@ -186,9 +172,10 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
 
         var markers = [];
         function nameCompile(){
-            var i = data.businesses.length;
+            var i = data.businesses.length, business;
             viewModel.restaurants.removeAll();
             while ( i-- ) {
+                business = data.businesses[i];
                 viewModel.restaurants.push({"name": data.businesses[i].name, 
                                            "rating": data.businesses[i].rating + " Stars", 
                                            "imgurl": data.businesses[i].image_url,
@@ -196,14 +183,7 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
                                            "display_phone": data.businesses[i].display_phone,
                                            "coordinate": data.businesses[i].location.coordinate,
                                            "url": data.businesses[i].url});
-            }  
-        }
-        //Format lat and long of restaurant
-        function coordinateCompile(){
-            var business, i = data.businesses.length;
-
-            while ( i-- ) {
-                business = data.businesses[i];
+                //Format lat and long of restaurant
                 if ( business.location && business.location.coordinate ) {
                     markers.push([
                         business.name,
@@ -212,9 +192,10 @@ https://groups.google.com/forum/#!topic/yelp-developer-support/5bDrWXWJsqY */
                     ]);
                 }
             }
+
         }
+       
         nameCompile();
-        coordinateCompile();
         //Send coordinates to google maps
         google.maps.event.addDomListener(window, 'load', initialize(markers));
     }
